@@ -1,0 +1,11 @@
+.logo {
+    margin: 45px auto 41px auto;
+}
+
+@media screen and (max-width: 568px) {
+    .logo  {
+      margin: 28px auto 31.6px 27px;
+      width: 103.74px;
+      height: 24.4px;
+  }
+}

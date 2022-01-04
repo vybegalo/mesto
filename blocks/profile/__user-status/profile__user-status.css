@@ -1,0 +1,21 @@
+.profile__user-status {
+  color: #FFFFFF;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  margin: 0;
+}
+
+@media screen and (max-width: 700px) {
+  .profile__user-status {
+      grid-column: 2/3;
+      justify-self: center;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .profile__user-status {
+      font-size: 14px;
+      line-height: 17px;
+  }
+}

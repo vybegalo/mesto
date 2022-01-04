@@ -1,0 +1,17 @@
+@font-face {
+    src: url(inter-400.woff2) format('woff2'), url(inter-400.woff) format('woff'), url(inter-400.ttf) format('truetype'), url(inter-400.otf) format('otf');
+    font-family: Inter;
+    font-weight: 400;
+}
+
+@font-face {
+    src: url(inter-500.woff2) format('woff2'), url(inter-500.woff) format('woff'), url(inter-500.ttf) format('truetype'), url(inter-500.otf) format('otf');
+    font-family: Inter;
+    font-weight: 500;
+}
+
+@font-face {
+    src: url(inter-900.woff2) format('woff2'), url(inter-900.woff) format('woff'), url(inter-900.ttf) format('truetype'), url(inter-900.otf) format('otf');
+    font-family: Inter;
+    font-weight: 900;
+}
