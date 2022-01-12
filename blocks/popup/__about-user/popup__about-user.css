@@ -1,0 +1,21 @@
+.popup__about-user {
+    border: 0;
+    width: 100%;
+    border: 0;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    border-bottom: 1px solid rgb(0, 0, 0, .2);
+    margin-bottom: 48px;
+    padding: 0 0 13px 0;
+}
+
+@media screen and (max-width: 550px) {
+    .popup__about-user {
+        margin-bottom: 45px;
+    }
+}
