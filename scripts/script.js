@@ -1,3 +1,5 @@
+// Popup section
+
 const buttonEditProfile = document.querySelector('.profile__edit-button');
 const buttonClose = document.querySelector('.popup__close');
 const overlay = document.querySelector('.overlay');
@@ -34,3 +36,15 @@ function formSubmitHandler(event) {
 };
 
 popup.addEventListener('submit', formSubmitHandler);
+
+// Like button section
+
+const likeButtonList = document.querySelectorAll('.element__like');
+const likeButtonActive = 'element__like_active';
+
+for (let i = 0; i < likeButtonList.length; i++) {
+    let likeButton = likeButtonList[i];
+    likeButton.addEventListener('click', function () {
+        likeButton.classList.toggle(likeButtonActive);
+    });
+};
