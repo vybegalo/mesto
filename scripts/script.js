@@ -20,3 +20,25 @@ document.addEventListener('keydown', function (event) {
         overlay.classList.remove(overlayActiveClass);
     }
 });
+
+
+let popup = document.querySelector('.popup');
+let nameInput = document.querySelector('.profile__user-name');
+let jobInput = document.querySelector('.profile__user-status');
+let buttonSave = document.querySelector('.popup__save');
+
+function formSubmitHandler(event) {
+    event.preventDefault();
+    nameInput.value = profileUserName.textContent;
+    jobInput.value = profileUserStatus.textContent;
+};
+
+function formSubmitHandler(event) {
+    event.preventDefault();
+    profileUserName.textContent = nameInput.value;
+    profileUserStatus.textContent = jobInput.value;
+    closePopup()
+};
+
+
+popup.addEventListener('submit', formSubmitHandler);
