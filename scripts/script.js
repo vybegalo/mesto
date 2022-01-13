@@ -11,34 +11,26 @@ buttonClose.addEventListener('click', function () {
     overlay.classList.remove(overlayActiveClass);
 });
 
-overlay.addEventListener('click', function () {
-    overlay.classList.remove(overlayActiveClass);
-});
-
 document.addEventListener('keydown', function (event) {
     if (event.code === 'Escape') {
         overlay.classList.remove(overlayActiveClass);
     }
 });
 
+let userName = document.querySelector('.profile__user-name');
+let userInfo = document.querySelector('.profile__user-status');
+let nameInput = document.querySelector('.popup__user-name');
+let jobInput = document.querySelector('.popup__about-user');
+let popup = document.querySelector('.popup__form');
 
-let popup = document.querySelector('.popup');
-let nameInput = document.querySelector('.profile__user-name');
-let jobInput = document.querySelector('.profile__user-status');
-let buttonSave = document.querySelector('.popup__save');
-
-function formSubmitHandler(event) {
-    event.preventDefault();
-    nameInput.value = profileUserName.textContent;
-    jobInput.value = profileUserStatus.textContent;
-};
+nameInput.value = userName.textContent;
+jobInput.value = userInfo.textContent;
 
 function formSubmitHandler(event) {
     event.preventDefault();
-    profileUserName.textContent = nameInput.value;
-    profileUserStatus.textContent = jobInput.value;
-    closePopup()
+    userName.textContent = nameInput.value;
+    userInfo.textContent = jobInput.value;
+    overlay.classList.remove(overlayActiveClass);
 };
-
 
 popup.addEventListener('submit', formSubmitHandler);
