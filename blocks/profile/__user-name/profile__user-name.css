@@ -1,4 +1,5 @@
 .profile__user-name {
+    max-width: 294px;
     color: #FFFFFF;
     white-space: nowrap;
     text-overflow: ellipsis;
