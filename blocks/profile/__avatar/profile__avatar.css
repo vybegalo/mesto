@@ -5,6 +5,12 @@
     grid-column: 1/2;
 }
 
+@media screen and (max-width: 1100px) {
+    .profile__avatar {
+        margin: auto;
+    }
+}
+
 @media screen and (max-width: 700px) {
     .profile__avatar {
         margin: 0 auto 22.25px;

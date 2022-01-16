@@ -1,10 +1,10 @@
 .profile__info {
-  display: grid;
-  margin: auto 0;
-  grid-template-columns: minmax(min-content, min-content) minmax(min-content, min-content);
-  column-gap: 18px;
-  row-gap: 16px;
-  text-overflow: ellipsis;
+    display: grid;
+    margin: auto 0;
+    grid-template-columns: minmax(min-content, min-content) minmax(min-content, min-content);
+    column-gap: 18px;
+    row-gap: 16px;
+    text-overflow: ellipsis;
 }
 
 @media screen and (max-width: 700px) {

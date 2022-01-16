@@ -1,10 +1,13 @@
 .profile__user-status {
-  max-width: 336px;
-  color: #FFFFFF;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 22px;
-  margin: 0;
+    max-width: 282px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #FFFFFF;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    margin: 0;
 }
 
 @media screen and (max-width: 700px) {
