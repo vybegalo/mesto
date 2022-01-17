@@ -6,12 +6,18 @@
     line-height: 17px;
     color: #000;
     border-bottom: 1px solid rgb(0, 0, 0, .2);
-    margin-bottom: 48px;
+    margin-bottom: 57px;
     padding: 0 0 9px 0;
 }
 
 .popup__user:last-of-type {
     margin-bottom: 30px;
+}
+
+@media screen and (max-width: 550px) {
+    .popup__user {
+        margin-bottom: 30px;
+    }
 }
 
 @media screen and (max-width: 550px) {

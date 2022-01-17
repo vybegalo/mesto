@@ -6,8 +6,8 @@ const overlay = document.querySelector('.overlay');
 const overlayActiveClass = 'overlay_active';
 let userName = document.querySelector('.profile__user-name');
 let userInfo = document.querySelector('.profile__user-status');
-let nameInput = document.querySelector('.popup__user-name');
-let jobInput = document.querySelector('.popup__about-user');
+let nameInput = document.querySelector('.popup__user_name');
+let jobInput = document.querySelector('.popup__user_info');
 let popup = document.querySelector('.popup__form');
 
 function openPopup() {
