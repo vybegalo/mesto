@@ -79,19 +79,19 @@
         <p class="footer__copyright">&#64; 2022 Евгения Ковалева</p>
     </footer>
 
-    <article class="overlay">
-        <div class="popup">
+    <div class="popup">
+        <div class="popup__content">
             <h2 class="popup__title">Редактировать профиль</h2>
             <form class="popup__form" name="popup">
-                <input class="popup__user popup__user_name" placeholder="Введите имя" type="text" name="userName">
-                <input class="popup__user popup__user_info" placeholder="Введите ваш статус" type="text"
-                    name="userInfo">
+                <input class="popup__user popup__user_type_name" placeholder="Введите имя" type="text" name="userName">
+                <input class="popup__user popup__user_type_description" placeholder="Введите информацию о себе"
+                    type="text" name="userInfo">
                 <button class="popup__save" type="submit">Сохранить</button>
             </form>
             <button class="popup__close" type="button" aria-label="Закрыть"></button>
 
         </div>
-    </article>
+    </div>
 
     <script src="./scripts/script.js"></script>
 </body>
