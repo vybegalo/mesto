@@ -1,4 +1,4 @@
-// Popup section
+// Popup section button edit
 
 const buttonEditProfile = document.querySelector('.profile__edit-button');
 const buttonClose = document.querySelector('.popup__close');
@@ -30,3 +30,22 @@ function formSubmitHandler(event) {
 buttonEditProfile.addEventListener('click', openPopup);
 buttonClose.addEventListener('click', closePopup);
 popupForm.addEventListener('submit', formSubmitHandler);
+
+
+// Popup section button add
+
+const profileAddButton = document.querySelector('.profile__add-button');
+const buttonCloseAdd = document.querySelector('.popup__close-add');
+const popupAddPlace = document.querySelector('.popup__type_add-place');
+
+function openPopupAdd() {
+    popupAddPlace.classList.add(popupActiveClass);
+};
+
+profileAddButton.addEventListener('click', openPopupAdd);
+
+function closePopupAdd() {
+    popupAddPlace.classList.remove(popupActiveClass);
+};
+
+buttonCloseAdd.addEventListener('click', closePopupAdd);

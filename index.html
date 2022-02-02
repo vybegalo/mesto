@@ -28,10 +28,12 @@
         <section class="elements">
             <div class="element">
                 <img class="element__image" src="./images/elements/karachaevsk.png" alt="Фото замка на фоне гор">
+                <button class="element__trash-bin" type="button" aria-label="Удалить фото"></button>
                 <div class="element__info">
                     <h2 class="element__name-place">Карачаевск</h2>
                     <button class="like element__like" type="button" aria-label="Лайк"></button>
                 </div>
+
             </div>
 
             <div class="element">
@@ -90,6 +92,18 @@
             </form>
             <button class="popup__close" type="button" aria-label="Закрыть"></button>
 
+        </div>
+    </div>
+
+    <div class="popup popup__type_add-place">
+        <div class="popup__content">
+            <h2 class="popup__title">Новое место</h2>
+            <form class="popup__form" name="new-place">
+                <input class="popup__user popup__place_type_name" type="text" placeholder="Название">
+                <input class="popup__user popup__place_type_link" type="text" placeholder="Ссылка на картинку">
+                <button class="popup__save popup__save-add" type="submit">Создать</button>
+            </form>
+            <button class="popup__close popup__close-add" type="button" aria-label="Закрыть"></button>
         </div>
     </div>
 
