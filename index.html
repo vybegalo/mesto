@@ -26,55 +26,16 @@
         </section>
 
         <section class="elements">
-            <div class="element">
-                <img class="element__image" src="./images/elements/karachaevsk.png" alt="Фото замка на фоне гор">
-                <button class="element__trash-bin" type="button" aria-label="Удалить фото"></button>
-                <div class="element__info">
-                    <h2 class="element__name-place">Карачаевск</h2>
-                    <button class="like element__like" type="button" aria-label="Лайк"></button>
+            <template id="elementTemplate">
+                <div class="element">
+                    <img class="element__image" src="" alt="">
+                    <button class="element__trash-bin" type="button" aria-label="Удалить фото"></button>
+                    <div class="element__info">
+                        <h2 class="element__name-place"></h2>
+                        <button class="like element__like" type="button" aria-label="Лайк"></button>
+                    </div>
                 </div>
-
-            </div>
-
-            <div class="element">
-                <img class="element__image" src="./images/elements/elbrus.png" alt="Фото горы на закате">
-                <div class="element__info">
-                    <h2 class="element__name-place">Гора Эльбрус</h2>
-                    <button class="like element__like" type="button" aria-label="Лайк"></button>
-                </div>
-            </div>
-
-            <div class="element">
-                <img class="element__image" src="./images/elements/dombay.png" alt="Заснеженные горы">
-                <div class="element__info">
-                    <h2 class="element__name-place">Домбай</h2>
-                    <button class="like element__like" type="button" aria-label="Лайк"></button>
-                </div>
-            </div>
-
-            <div class="element">
-                <img class="element__image" src="./images/elements/krasn_kray.jfif" alt="Мокрые камни и мох">
-                <div class="element__info">
-                    <h2 class="element__name-place">Краснодарский край</h2>
-                    <button class="like element__like" type="button" aria-label="Лайк"></button>
-                </div>
-            </div>
-
-            <div class="element">
-                <img class="element__image" src="./images/elements/mosk_obl.jfif" alt="Фото сверху на зимнюю реку">
-                <div class="element__info">
-                    <h2 class="element__name-place">Московская область</h2>
-                    <button class="like element__like" type="button" aria-label="Лайк"></button>
-                </div>
-            </div>
-
-            <div class="element">
-                <img class="element__image" src="./images/elements/avstriya.jpg" alt="Фото гор покрытых зеленью">
-                <div class="element__info">
-                    <h2 class="element__name-place">Алтай</h2>
-                    <button class="like element__like" type="button" aria-label="Лайк"></button>
-                </div>
-            </div>
+            </template>
         </section>
     </main>
     <footer class="footer">
@@ -107,6 +68,7 @@
         </div>
     </div>
 
+    <script src="./scripts/icards.js"></script>
     <script src="./scripts/script.js"></script>
 </body>
 
