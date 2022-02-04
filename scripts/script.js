@@ -81,13 +81,25 @@ function addElement(item) {
     elementImage.alt = item.alt;
 
     /* add like function listener */
+    elementLike.addEventListener('click', () => {
+        elementLike.classList.toggle('element__like_active');
+    });
+
+
     /* add trash function listener */
+    elementTrash.addEventListener('click', () => {
+        console.log(elementTrash);
+        const currentElement = elementTrash.closest('.element');
+        currentElement.remove();
+    });
+
+
     /* add enlarge function listener */
 
     return element;
 }
 
-function renderElement(elementsContainer, element, order = "last") {
+async function renderElement(elementsContainer, element, order = "last") {
     if (order === "first") {
         elementsContainer.prepend(element);
     } else {
