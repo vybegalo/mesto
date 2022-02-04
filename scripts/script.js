@@ -58,7 +58,19 @@ buttonCloseAdd.addEventListener('click', () => {
     closePopup(popupAddPlace);
 });
 
-// TODO: popup section enlarge
+// popup section enlarge
+
+const popupImage = document.querySelector('.popup-image');
+const imageLarge = popupImage.querySelector('.popup-image__large');
+const imageTitle = popupImage.querySelector('.popup-image__title');
+const popupButtonImageClose = popupImage.querySelector('.popup__close-image');
+
+const hangleClickElementImage = (item) => {
+    openPopup(popupImage);
+    imageLarge.src = item.link;
+    imageLarge.alt = item.alt;
+    imageTitle.textContent = item.name;
+};
 
 
 // Elements (cards) section
@@ -81,12 +93,14 @@ function addElement(item) {
     elementImage.alt = item.alt;
 
     /* add like function listener */
+
     elementLike.addEventListener('click', () => {
         elementLike.classList.toggle('element__like_active');
     });
 
 
     /* add trash function listener */
+
     elementTrash.addEventListener('click', () => {
         console.log(elementTrash);
         const currentElement = elementTrash.closest('.element');
@@ -95,6 +109,14 @@ function addElement(item) {
 
 
     /* add enlarge function listener */
+
+    elementImage.addEventListener('click', () => {
+        openPopup(popupImage);
+    });
+
+    popupButtonImageClose.addEventListener('click', () => {
+        closePopup(popupImage);
+    });
 
     return element;
 }
@@ -106,6 +128,8 @@ async function renderElement(elementsContainer, element, order = "last") {
         elementsContainer.append(element);
     }
 }
+
+/*Add photo by user*/
 
 function elementPopupSubmit(event) {
     event.preventDefault();
