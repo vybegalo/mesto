@@ -16,11 +16,11 @@ function closePopup(node) {
 const buttonEditProfile = document.querySelector('.profile__edit-button');
 const buttonClose = document.querySelector('.popup__close');
 const popup = document.querySelector('.popup');
-let userName = document.querySelector('.profile__user-name');
-let userInfo = document.querySelector('.profile__user-status');
-let nameInput = document.querySelector('.popup__user_type_name');
-let jobInput = document.querySelector('.popup__user_type_description');
-let popupForm = document.querySelector('.popup__form');
+const userName = document.querySelector('.profile__user-name');
+const userInfo = document.querySelector('.profile__user-status');
+const nameInput = document.querySelector('.popup__user_type_name');
+const jobInput = document.querySelector('.popup__user_type_description');
+const popupForm = document.querySelector('.popup__form');
 
 
 buttonEditProfile.addEventListener('click', () => {
@@ -65,13 +65,12 @@ const imageLarge = popupImage.querySelector('.popup-image__large');
 const imageTitle = popupImage.querySelector('.popup-image__title');
 const popupButtonImageClose = popupImage.querySelector('.popup__close-image');
 
-const hangleClickElementImage = (item) => {
+function elementImageEnlarge(item, name) {
     openPopup(popupImage);
-    imageLarge.src = item.link;
+    imageLarge.src = item.src;
     imageLarge.alt = item.alt;
-    imageTitle.textContent = item.name;
+    imageTitle.textContent = name;
 };
-
 
 // Elements (cards) section
 
@@ -102,7 +101,6 @@ function addElement(item) {
     /* add trash function listener */
 
     elementTrash.addEventListener('click', () => {
-        console.log(elementTrash);
         const currentElement = elementTrash.closest('.element');
         currentElement.remove();
     });
@@ -111,7 +109,7 @@ function addElement(item) {
     /* add enlarge function listener */
 
     elementImage.addEventListener('click', () => {
-        openPopup(popupImage);
+        elementImageEnlarge(elementImage, elementName.textContent);
     });
 
     popupButtonImageClose.addEventListener('click', () => {
@@ -121,7 +119,7 @@ function addElement(item) {
     return element;
 }
 
-async function renderElement(elementsContainer, element, order = "last") {
+function renderElement(elementsContainer, element, order = "last") {
     if (order === "first") {
         elementsContainer.prepend(element);
     } else {
@@ -129,7 +127,7 @@ async function renderElement(elementsContainer, element, order = "last") {
     }
 }
 
-/*Add photo by user*/
+/* add photo by user */
 
 function elementPopupSubmit(event) {
     event.preventDefault();
