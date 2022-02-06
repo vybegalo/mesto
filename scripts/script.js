@@ -46,7 +46,7 @@ popupForm.addEventListener('submit', (event) => {
 
 const profileAddButton = document.querySelector('.profile__add-button');
 const buttonCloseAdd = document.querySelector('.popup__close-add');
-const popupAddPlace = document.querySelector('.popup__type_add-place');
+const popupAddPlace = document.querySelector('.popup_type_add-place');
 const popupAddPlaceForm = popupAddPlace.querySelector('.popup__form');
 
 profileAddButton.addEventListener('click', () => {
@@ -74,8 +74,8 @@ function elementImageEnlarge(item, name) {
 
 // Elements (cards) section
 
-const placeNameInput = document.querySelector('.popup__place_type_name');
-const placeLinkInput = document.querySelector('.popup__place_type_link');
+const placeNameInput = document.querySelector('.popup__user_type_plase-name');
+const placeLinkInput = document.querySelector('.popup__user_type_plase-link');
 const elementsContainer = document.querySelector(".elements");
 
 function addElement(item) {
