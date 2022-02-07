@@ -60,9 +60,9 @@ buttonCloseAdd.addEventListener('click', () => {
 
 // popup section enlarge
 
-const popupImage = document.querySelector('.popup-image');
-const imageLarge = popupImage.querySelector('.popup-image__large');
-const imageTitle = popupImage.querySelector('.popup-image__title');
+const popupImage = document.querySelector('.popup_image');
+const imageLarge = popupImage.querySelector('.popup__image-large');
+const imageTitle = popupImage.querySelector('.popup__image-title');
 const popupButtonImageClose = popupImage.querySelector('.popup__close-image');
 
 function elementImageEnlarge(item, name) {
