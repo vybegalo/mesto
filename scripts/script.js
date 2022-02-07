@@ -15,7 +15,7 @@ function closePopup(node) {
 
 const buttonEditProfile = document.querySelector('.profile__edit-button');
 const buttonClose = document.querySelector('.popup__close');
-const popup = document.querySelector('.popup');
+const popupEditProfile = document.querySelector('.popup_edit-profile');
 const userName = document.querySelector('.profile__user-name');
 const userInfo = document.querySelector('.profile__user-status');
 const nameInput = document.querySelector('.popup__user_type_name');
@@ -26,19 +26,19 @@ const popupForm = document.querySelector('.popup__form');
 buttonEditProfile.addEventListener('click', () => {
     nameInput.value = userName.textContent;
     jobInput.value = userInfo.textContent;
-    openPopup(popup);
+    openPopup(popupEditProfile);
 });
 
 buttonClose.addEventListener('click', () => {
     popupForm.reset();
-    closePopup(popup);
+    closePopup(popupEditProfile);
 });
 
 popupForm.addEventListener('submit', (event) => {
     event.preventDefault();
     userName.textContent = nameInput.value;
     userInfo.textContent = jobInput.value;
-    closePopup(popup);
+    closePopup(popupEditProfile);
 });
 
 
@@ -71,6 +71,10 @@ function elementImageEnlarge(item, name) {
     imageLarge.alt = item.alt;
     imageTitle.textContent = name;
 };
+
+popupButtonImageClose.addEventListener('click', () => {
+    closePopup(popupImage);
+});
 
 // Elements (cards) section
 
@@ -112,19 +116,11 @@ function addElement(item) {
         elementImageEnlarge(elementImage, elementName.textContent);
     });
 
-    popupButtonImageClose.addEventListener('click', () => {
-        closePopup(popupImage);
-    });
-
     return element;
 }
 
-function renderElement(elementsContainer, element, order = "last") {
-    if (order === "first") {
-        elementsContainer.prepend(element);
-    } else {
-        elementsContainer.append(element);
-    }
+function renderElement(elementsContainer, element, toBeggining = false) {
+    toBeggining ? elementsContainer.prepend(element) : elementsContainer.append(element);
 }
 
 /* add photo by user */
@@ -135,11 +131,11 @@ function elementPopupSubmit(event) {
     const elementData = {
         name: placeNameInput.value,
         link: placeLinkInput.value,
-        alt: "Фото от пользователя"
+        alt: placeNameInput.value
     }
 
     const newElement = addElement(elementData);
-    renderElement(elementsContainer, newElement, "first");
+    renderElement(elementsContainer, newElement, true);
     popupAddPlaceForm.reset();
     closePopup(popupAddPlace);
 }
@@ -148,6 +144,5 @@ popupAddPlace.addEventListener('submit', elementPopupSubmit)
 
 
 initialCards.forEach(item => {
-    const element = addElement(item);
-    renderElement(elementsContainer, element);
+    renderElement(elementsContainer, addElement(item));
 })
