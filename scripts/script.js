@@ -93,8 +93,8 @@ popupButtonImageClose.addEventListener('click', () => {
 
 // Elements (cards) section
 
-const placeNameInput = document.querySelector('.popup__user_type_plase-name');
-const placeLinkInput = document.querySelector('.popup__user_type_plase-link');
+const placeNameInput = document.querySelector('.popup__user_type_place-name');
+const placeLinkInput = document.querySelector('.popup__user_type_place-link');
 const elementsContainer = document.querySelector(".elements");
 
 function addElement(item) {

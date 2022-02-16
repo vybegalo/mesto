@@ -1,9 +1,0 @@
-.popup__form_label {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-}
-
-.popup__form_label:nth-of-type(2n) {
-    margin-bottom: 0;
-}
