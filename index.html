@@ -46,10 +46,19 @@
     <div class="popup popup_edit-profile">
         <div class="popup__content">
             <h2 class="popup__title">Редактировать профиль</h2>
-            <form class="popup__form" name="popup">
-                <input class="popup__user popup__user_type_name" placeholder="Введите имя" type="text" name="userName">
-                <input class="popup__user popup__user_type_description" placeholder="Введите информацию о себе"
-                    type="text" name="userInfo">
+            <form class="popup__form" name="popup" novalidate>
+                <label class="popup__form_label">
+                    <input class="popup__user
+                    popup__user_type_name" placeholder="Введите имя" type="text" name="userName" minlength="2"
+                        maxlength="40" required>
+                    <span class="popup__form_input-error name-input-error"></span>
+                </label>
+                <label class="popup__form_label">
+                    <input class="popup__user
+                    popup__user_type_description" placeholder="Введите информацию о себе" type="text" name="userInfo"
+                        minlength="2" maxlength="200" required>
+                    <span class="popup__form_input-error info-input-error"></span>
+                </label>
                 <button class="popup__save" type="submit">Сохранить</button>
             </form>
             <button class="popup__close" type="button" aria-label="Закрыть"></button>
@@ -60,9 +69,18 @@
     <div class="popup popup_type_add-place">
         <div class="popup__content">
             <h2 class="popup__title">Новое место</h2>
-            <form class="popup__form" name="new-place">
-                <input class="popup__user popup__user_type_plase-name" type="text" placeholder="Название">
-                <input class="popup__user popup__user_type_plase-link" type="text" placeholder="Ссылка на картинку">
+            <form class="popup__form" name="new-place" novalidate>
+                <label class="popup__form_label">
+                    <input class="popup__user
+                    popup__user_type_plase-name" type="text" placeholder="Название" minlength="2" maxlength="30"
+                        required>
+                    <span class="popup__form_input-error element-input-error">Вы пропустили это поле</span>
+                </label>
+                <label class="popup__form_label">
+                    <input class="popup__user
+                    popup__user_type_plase-link" type="url" placeholder="Ссылка на картинку" value required>
+                    <span class="popup__form_input-error link-input-error"></span>
+                </label>
                 <button class="popup__save popup__save-add" type="submit">Создать</button>
             </form>
             <button class="popup__close popup__close-add" type="button" aria-label="Закрыть"></button>
@@ -78,6 +96,7 @@
     </div>
 
     <script src="./scripts/icards.js"></script>
+    <script src="./scripts/validate.js"></script>
     <script src="./scripts/script.js"></script>
 </body>
 
