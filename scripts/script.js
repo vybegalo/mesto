@@ -15,13 +15,13 @@ const closeOnEvent = (evt) => {
 
 function openPopup(node) {
     node.classList.add(popupActiveClass);
-    node.addEventListener('click', closeOnEvent);
+    node.addEventListener('mousedown', closeOnEvent);
     document.addEventListener('keydown', closeOnEvent);
 }
 
 function closePopup(node) {
     node.classList.remove(popupActiveClass);
-    node.removeEventListener('click', closeOnEvent);
+    node.removeEventListener('mousedown', closeOnEvent);
     document.removeEventListener('keydown', closeOnEvent);
 };
 
@@ -110,14 +110,14 @@ function addElement(item) {
     elementImage.src = item.link;
     elementImage.alt = item.alt;
 
-    /* add like function listener */
+    // add like function listener
 
     elementLike.addEventListener('click', () => {
         elementLike.classList.toggle('element__like_active');
     });
 
 
-    /* add trash function listener */
+    // add trash function listener
 
     elementTrash.addEventListener('click', () => {
         const currentElement = elementTrash.closest('.element');
@@ -125,7 +125,7 @@ function addElement(item) {
     });
 
 
-    /* add enlarge function listener */
+    // add enlarge function listener
 
     elementImage.addEventListener('click', () => {
         elementImageEnlarge(elementImage, elementName.textContent);
@@ -138,7 +138,7 @@ function renderElement(elementsContainer, element, toBeggining = false) {
     toBeggining ? elementsContainer.prepend(element) : elementsContainer.append(element);
 }
 
-/* add photo by user */
+// add photo by user
 
 function elementPopupSubmit(event) {
     event.preventDefault();
