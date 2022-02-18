@@ -5,7 +5,6 @@ const formsValidationConfig = {
     spanErrorClass: 'popup__input-error_active',
     submitButtonSelector: '.popup__save',
     submitButtonDisabled: 'popup__save_disabled'
-
 };
 
 // validation main function
@@ -19,7 +18,7 @@ function enableValidation(config) {
 // input listeners
 
 function addFormListeners(form, config) {
-    form.addEventListener('submit', disableSubmit);
+    form.addEventListener('submit', handleSubmit);
     form.addEventListener('input', () => toggleSubmit(form, config));
     const inputs = [...form.querySelectorAll(config.inputSelector)];
     inputs.forEach(input => input.addEventListener('input', () => validateInput(form, input, config)));
@@ -29,8 +28,9 @@ function addFormListeners(form, config) {
 
 // disable default submit action
 
-function disableSubmit(event) {
-    event.preventDefault()
+function handleSubmit(event) {
+    event.preventDefault();
+    event.target.reset();
 };
 
 
@@ -70,7 +70,6 @@ function toggleSubmit(form, config) {
     button.disabled = !form.checkValidity();
     button.classList.toggle(config.submitButtonDisabled, !form.checkValidity())
 };
-
 
 
 enableValidation(formsValidationConfig);
