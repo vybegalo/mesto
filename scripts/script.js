@@ -1,3 +1,5 @@
+import { Card } from "./card.js";
+
 const popupActiveClass = 'popup_active';
 const profileAddButton = document.querySelector('.profile__add-button');
 const buttonEditProfile = document.querySelector('.profile__edit-button');
@@ -11,13 +13,10 @@ const popupForm = document.querySelector('.popup__form');
 const buttonCloseAdd = document.querySelector('.popup__close-add');
 const popupAddPlace = document.querySelector('.popup_type_add-place');
 const popupAddPlaceForm = popupAddPlace.querySelector('.popup__form');
-const popupImage = document.querySelector('.popup_image');
-const imageLarge = popupImage.querySelector('.popup__image-large');
-const imageTitle = popupImage.querySelector('.popup__image-title');
-const popupButtonImageClose = popupImage.querySelector('.popup__close-image');
 const placeNameInput = document.querySelector('.popup__user_type_place-name');
 const placeLinkInput = document.querySelector('.popup__user_type_place-link');
-const elementsContainer = document.querySelector(".elements");
+const elementsContainer = document.querySelector('.elements');
+const elementSelector = '#elementTemplate';
 
 // keydown / click handlers
 
@@ -37,13 +36,13 @@ const closeOnSideClick = (evt) => {
 
 // Popup open/close section
 
-function openPopup(popup) {
+export function openPopup(popup) {
     popup.classList.add(popupActiveClass);
     popup.addEventListener('mousedown', closeOnSideClick);
     document.addEventListener('keydown', closeOnEsc);
 }
 
-function closePopup(popup) {
+export function closePopup(popup) {
     popup.classList.remove(popupActiveClass);
     const elementForm = popup.querySelector('.popup__form');
     if (elementForm) {
@@ -73,7 +72,6 @@ popupForm.addEventListener('submit', (event) => {
     closePopup(popupEditProfile);
 });
 
-
 // Popup section button "add"
 
 profileAddButton.addEventListener('click', () => {
@@ -85,58 +83,7 @@ buttonCloseAdd.addEventListener('click', () => {
 });
 
 
-// popup section enlarge
-
-function elementImageEnlarge(item, name) {
-    openPopup(popupImage);
-    imageLarge.src = item.src;
-    imageLarge.alt = item.alt;
-    imageTitle.textContent = name;
-};
-
-popupButtonImageClose.addEventListener('click', () => {
-    closePopup(popupImage);
-});
-
-
 // Elements (cards) section
-
-function addElement(item) {
-
-    const elementTemplate = document.querySelector('#elementTemplate').content;
-    const element = elementTemplate.querySelector('.element').cloneNode(true);
-    const elementName = element.querySelector('.element__name-place');
-    const elementImage = element.querySelector('.element__image');
-    const elementTrash = element.querySelector('.element__trash-bin');
-    const elementLike = element.querySelector('.element__like');
-
-    elementName.textContent = item.name;
-    elementImage.src = item.link;
-    elementImage.alt = item.alt;
-
-    // add like function listener
-
-    elementLike.addEventListener('click', () => {
-        elementLike.classList.toggle('element__like_active');
-    });
-
-
-    // add trash function listener
-
-    elementTrash.addEventListener('click', () => {
-        const currentElement = elementTrash.closest('.element');
-        currentElement.remove();
-    });
-
-
-    // add enlarge function listener
-
-    elementImage.addEventListener('click', () => {
-        elementImageEnlarge(elementImage, elementName.textContent);
-    });
-
-    return element;
-}
 
 function renderElement(elementsContainer, element, toBeggining = false) {
     toBeggining ? elementsContainer.prepend(element) : elementsContainer.append(element);
@@ -153,8 +100,8 @@ function elementPopupSubmit(event) {
         alt: placeNameInput.value
     }
 
-    const newElement = addElement(elementData);
-    renderElement(elementsContainer, newElement, true);
+    const newElement = new Card(elementData, elementSelector);
+    renderElement(elementsContainer, newElement.generateElement(), true);
     closePopup(popupAddPlace);
 }
 
@@ -162,6 +109,7 @@ popupAddPlace.addEventListener('submit', elementPopupSubmit)
 
 
 initialCards.forEach(item => {
-    renderElement(elementsContainer, addElement(item));
+    const newElement = new Card(item, elementSelector);
+    renderElement(elementsContainer, newElement.generateElement());
 })
 
