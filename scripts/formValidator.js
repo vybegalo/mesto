@@ -1,87 +1,62 @@
-class formValidator {
-    constructor(config, formElement) {
-        this._config = config;
-        this._formElement = formElement;
+class FormValidator {
 
+    constructor(config, form) {
+        this._config = config;
+        this._form = form;
     }
 
+    // show and hide error message
+    _showError(input) {
+        const errorElement = this._form.querySelector(`#${input.id}-error`);
+        input.classList.add(this._config.inputErrorClass);
+        errorElement.textContent = input.validationMessage;
+        errorElement.classList.add(this._config.spanErrorClass);
+    };
 
+    _hideError(input) {
+        const errorElement = this._form.querySelector(`#${input.id}-error`);
+        input.classList.remove(this._config.inputErrorClass);
+        errorElement.textContent = '';
+        errorElement.classList.remove(this._config.spanErrorClass);
+    };
 
+    // check input validation
+    _validateInput(input) {
+        if (input.validity.valid) {
+            this._hideError(input)
+        }
+        else {
+            this._showError(input)
+        }
+    };
+
+    // activate and deactivate submit button
+    _toggleSubmit() {
+        const button = this._form.querySelector(this._config.submitButtonSelector);
+        button.disabled = !this._form.checkValidity();
+        button.classList.toggle(this._config.submitButtonDisabled, !this._form.checkValidity())
+    };
+
+    // disable default submit action
+    _handleSubmit(event) {
+        event.preventDefault();
+        event.target.reset();
+    };
+
+    // input listeners
+    _addFormListeners() {
+        this._form.addEventListener('submit', this._handleSubmit);
+        this._form.addEventListener('input', () => this._toggleSubmit());
+        const inputs = [...this._form.querySelectorAll(this._config.inputSelector)];
+        inputs.forEach(input => input.addEventListener('input', () => this._validateInput(input)));
+        this._toggleSubmit();
+    };
+
+    // validation public function
+    enableValidation() {
+        this._addFormListeners();
+    };
 
 }
 
-const formsValidationConfig = {
-    formSelector: '.popup__form',
-    inputSelector: '.popup__user',
-    inputErrorClass: 'popup__user_type_error',
-    spanErrorClass: 'popup__input-error_active',
-    submitButtonSelector: '.popup__save',
-    submitButtonDisabled: 'popup__save_disabled'
-};
-
-// validation main function
-
-function enableValidation(config) {
-    const forms = [...document.querySelectorAll(config.formSelector)];
-    forms.forEach(form => addFormListeners(form, config))
-};
-
-
-// input listeners
-
-function addFormListeners(form, config) {
-    form.addEventListener('submit', handleSubmit);
-    form.addEventListener('input', () => toggleSubmit(form, config));
-    const inputs = [...form.querySelectorAll(config.inputSelector)];
-    inputs.forEach(input => input.addEventListener('input', () => validateInput(form, input, config)));
-
-    toggleSubmit(form, config);
-};
-
-// disable default submit action
-
-function handleSubmit(event) {
-    event.preventDefault();
-    event.target.reset();
-};
-
-
-// check input validation
-
-function validateInput(form, input, config) {
-    if (input.validity.valid) {
-        hideError(form, input, config)
-    }
-    else {
-        showError(form, input, input.validationMessage, config)
-    }
-};
-
-
-// show and hide error message
-
-function showError(form, input, errorMessage, config) {
-    const errorElement = form.querySelector(`#${input.id}-error`);
-    input.classList.add(config.inputErrorClass);
-    errorElement.textContent = errorMessage;
-    errorElement.classList.add(config.spanErrorClass);
-};
-
-function hideError(form, input, config) {
-    const errorElement = form.querySelector(`#${input.id}-error`);
-    input.classList.remove(config.inputErrorClass);
-    errorElement.textContent = '';
-    errorElement.classList.remove(config.spanErrorClass);
-};
-
-
-// activate and deactivate submit button
-
-function toggleSubmit(form, config) {
-    const button = form.querySelector(config.submitButtonSelector);
-    button.disabled = !form.checkValidity();
-    button.classList.toggle(config.submitButtonDisabled, !form.checkValidity())
-};
-
-
-enableValidation(formsValidationConfig);
+export { FormValidator };

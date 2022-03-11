@@ -1,4 +1,5 @@
 import { Card } from "./card.js";
+import { FormValidator } from "./formValidator.js";
 
 const popupActiveClass = 'popup_active';
 const profileAddButton = document.querySelector('.profile__add-button');
@@ -17,6 +18,15 @@ const placeNameInput = document.querySelector('.popup__user_type_place-name');
 const placeLinkInput = document.querySelector('.popup__user_type_place-link');
 const elementsContainer = document.querySelector('.elements');
 const elementSelector = '#elementTemplate';
+const formsValidationConfig = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__user',
+    inputErrorClass: 'popup__user_type_error',
+    spanErrorClass: 'popup__input-error_active',
+    submitButtonSelector: '.popup__save',
+    submitButtonDisabled: 'popup__save_disabled'
+};
+
 
 // keydown / click handlers
 
@@ -44,13 +54,14 @@ export function openPopup(popup) {
 
 export function closePopup(popup) {
     popup.classList.remove(popupActiveClass);
-    const elementForm = popup.querySelector('.popup__form');
-    if (elementForm) {
-        toggleSubmit(elementForm, formsValidationConfig)
-    }
-
     popup.removeEventListener('mousedown', closeOnSideClick);
     document.removeEventListener('keydown', closeOnEsc);
+
+    const formElement = popup.querySelector(formsValidationConfig.formSelector);
+    if (formElement) {
+        const button = formElement.querySelector(formsValidationConfig.submitButtonSelector);
+        button.classList.toggle(formsValidationConfig.submitButtonDisabled);
+    }
 };
 
 // Profile manage section
@@ -107,9 +118,17 @@ function elementPopupSubmit(event) {
 
 popupAddPlace.addEventListener('submit', elementPopupSubmit)
 
+// Initialize cards
 
 initialCards.forEach(item => {
     const newElement = new Card(item, elementSelector);
     renderElement(elementsContainer, newElement.generateElement());
 })
 
+// Enable form validation
+
+const forms = [...document.querySelectorAll(formsValidationConfig.formSelector)];
+forms.forEach(form => {
+    const formValidationInstance = new FormValidator(formsValidationConfig, form);
+    formValidationInstance.enableValidation();
+});
