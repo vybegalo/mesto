@@ -10,7 +10,6 @@ class Card {
         this._popupImage = document.querySelector('.popup_image');
         this._imageLarge = this._popupImage.querySelector('.popup__image-large');
         this._imageTitle = this._popupImage.querySelector('.popup__image-title');
-        this._popupButtonImageClose = this._popupImage.querySelector('.popup__close-image');
     };
 
     // get element template
