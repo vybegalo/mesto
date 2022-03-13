@@ -3,6 +3,7 @@ class FormValidator {
     constructor(config, form) {
         this._config = config;
         this._form = form;
+        this._buttonElement = this._form.querySelector(this._config.submitButtonSelector);
     }
 
     // show and hide error message
@@ -30,26 +31,24 @@ class FormValidator {
         }
     };
 
-    // activate and deactivate submit button
-    _toggleSubmit() {
-        const button = this._form.querySelector(this._config.submitButtonSelector);
-        button.disabled = !this._form.checkValidity();
-        button.classList.toggle(this._config.submitButtonDisabled, !this._form.checkValidity())
+    // activate and deactivate submit button public method
+    toggleSubmit() {
+        this._buttonElement.disabled = !this._form.checkValidity();
+        this._buttonElement.classList.toggle(this._config.submitButtonDisabled, !this._form.checkValidity())
     };
 
     // disable default submit action
     _handleSubmit(event) {
         event.preventDefault();
-        event.target.reset();
     };
 
     // input listeners
     _addFormListeners() {
         this._form.addEventListener('submit', this._handleSubmit);
-        this._form.addEventListener('input', () => this._toggleSubmit());
+        this._form.addEventListener('input', () => this.toggleSubmit());
         const inputs = [...this._form.querySelectorAll(this._config.inputSelector)];
         inputs.forEach(input => input.addEventListener('input', () => this._validateInput(input)));
-        this._toggleSubmit();
+        this.toggleSubmit();
     };
 
     // validation public function

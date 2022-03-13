@@ -1,5 +1,6 @@
-import { Card } from "./card.js";
-import { FormValidator } from "./formValidator.js";
+import { Card } from "./Card.js";
+import { FormValidator } from "./FormValidator.js";
+import { initialCards } from "./icards.js";
 
 const popupActiveClass = 'popup_active';
 const profileAddButton = document.querySelector('.profile__add-button');
@@ -13,9 +14,10 @@ const jobInput = document.querySelector('.popup__user_type_description');
 const popupForm = document.querySelector('.popup__form');
 const buttonCloseAdd = document.querySelector('.popup__close-add');
 const popupAddPlace = document.querySelector('.popup_type_add-place');
-const popupAddPlaceForm = popupAddPlace.querySelector('.popup__form');
 const placeNameInput = document.querySelector('.popup__user_type_place-name');
 const placeLinkInput = document.querySelector('.popup__user_type_place-link');
+const popupImage = document.querySelector('.popup_image');
+const popupImageCloseButton = popupImage.querySelector('.popup__close-image');
 const elementsContainer = document.querySelector('.elements');
 const elementSelector = '#elementTemplate';
 const formsValidationConfig = {
@@ -25,6 +27,22 @@ const formsValidationConfig = {
     spanErrorClass: 'popup__input-error_active',
     submitButtonSelector: '.popup__save',
     submitButtonDisabled: 'popup__save_disabled'
+};
+const popupEditProfileForm = popupEditProfile.querySelector('.popup__form');
+const popupAddPlaceForm = popupAddPlace.querySelector('.popup__form');
+
+// Card class instance
+
+const createCardInstance = (item, elementSelector) => {
+    const newElement = new Card(item, elementSelector);
+    return newElement;
+};
+
+// FormValidator class instance
+
+const createValidatorInstance = (config, form) => {
+    const formValidationInstance = new FormValidator(config, form);
+    return formValidationInstance;
 };
 
 
@@ -56,12 +74,6 @@ export function closePopup(popup) {
     popup.classList.remove(popupActiveClass);
     popup.removeEventListener('mousedown', closeOnSideClick);
     document.removeEventListener('keydown', closeOnEsc);
-
-    const formElement = popup.querySelector(formsValidationConfig.formSelector);
-    if (formElement) {
-        const button = formElement.querySelector(formsValidationConfig.submitButtonSelector);
-        button.classList.toggle(formsValidationConfig.submitButtonDisabled);
-    }
 };
 
 // Profile manage section
@@ -93,6 +105,11 @@ buttonCloseAdd.addEventListener('click', () => {
     closePopup(popupAddPlace);
 });
 
+// Image close button
+
+popupImageCloseButton.addEventListener('click', () => {
+    closePopup(popupImage);
+});
 
 // Elements (cards) section
 
@@ -100,7 +117,7 @@ function renderElement(elementsContainer, element, toBeggining = false) {
     toBeggining ? elementsContainer.prepend(element) : elementsContainer.append(element);
 }
 
-// add photo by user
+// add place by user
 
 function elementPopupSubmit(event) {
     event.preventDefault();
@@ -111,9 +128,12 @@ function elementPopupSubmit(event) {
         alt: placeNameInput.value
     }
 
-    const newElement = new Card(elementData, elementSelector);
+    const newElement = createCardInstance(elementData, elementSelector);
     renderElement(elementsContainer, newElement.generateElement(), true);
     closePopup(popupAddPlace);
+    event.target.reset();
+    const formValidationInstance = createValidatorInstance(formsValidationConfig, event.target);
+    formValidationInstance.toggleSubmit();
 }
 
 popupAddPlace.addEventListener('submit', elementPopupSubmit)
@@ -121,14 +141,14 @@ popupAddPlace.addEventListener('submit', elementPopupSubmit)
 // Initialize cards
 
 initialCards.forEach(item => {
-    const newElement = new Card(item, elementSelector);
+    const newElement = createCardInstance(item, elementSelector);
     renderElement(elementsContainer, newElement.generateElement());
 })
 
-// Enable form validation
+// Enable forms validation
 
-const forms = [...document.querySelectorAll(formsValidationConfig.formSelector)];
-forms.forEach(form => {
-    const formValidationInstance = new FormValidator(formsValidationConfig, form);
-    formValidationInstance.enableValidation();
-});
+const profileFormValidation = createValidatorInstance(formsValidationConfig, popupEditProfileForm);
+profileFormValidation.enableValidation();
+
+const addPlaceValidation = createValidatorInstance(formsValidationConfig, popupAddPlaceForm);
+addPlaceValidation.enableValidation();

@@ -1,4 +1,4 @@
-import { openPopup, closePopup } from './script.js';
+import { openPopup, closePopup } from './index.js';
 
 class Card {
     constructor(item, elementSelector) {
@@ -56,18 +56,13 @@ class Card {
 
         // trash function listener
         this._elementTrash.addEventListener('click', () => {
-            const currentElement = this._elementTrash.closest('.element');
-            currentElement.remove();
+            this._element.remove();
+            this._element = null;
         });
 
         // enlarge function listener
         this._elementImage.addEventListener('click', () => {
             this._elementImageEnlarge();
-        });
-
-        // close image listener
-        this._popupButtonImageClose.addEventListener('click', () => {
-            closePopup(this._popupImage);
         });
 
     }
