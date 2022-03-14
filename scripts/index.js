@@ -45,6 +45,13 @@ const createValidatorInstance = (config, form) => {
     return formValidationInstance;
 };
 
+// Enable forms validation
+
+const profileFormValidation = createValidatorInstance(formsValidationConfig, popupEditProfileForm);
+profileFormValidation.enableValidation();
+
+const addPlaceValidation = createValidatorInstance(formsValidationConfig, popupAddPlaceForm);
+addPlaceValidation.enableValidation();
 
 // keydown / click handlers
 
@@ -57,8 +64,7 @@ const closeOnEsc = (evt) => {
 
 const closeOnSideClick = (evt) => {
     if (evt.target === evt.currentTarget) {
-        const popupOpened = document.querySelector("." + popupActiveClass);
-        closePopup(popupOpened);
+        closePopup(evt.target);
     }
 };
 
@@ -82,6 +88,7 @@ buttonEditProfile.addEventListener('click', () => {
     nameInput.value = userName.textContent;
     jobInput.value = userInfo.textContent;
     openPopup(popupEditProfile);
+    profileFormValidation.toggleSubmit();
 });
 
 buttonClose.addEventListener('click', () => {
@@ -99,6 +106,7 @@ popupForm.addEventListener('submit', (event) => {
 
 profileAddButton.addEventListener('click', () => {
     openPopup(popupAddPlace);
+    addPlaceValidation.toggleSubmit();
 });
 
 buttonCloseAdd.addEventListener('click', () => {
@@ -132,8 +140,7 @@ function elementPopupSubmit(event) {
     renderElement(elementsContainer, newElement.generateElement(), true);
     closePopup(popupAddPlace);
     event.target.reset();
-    const formValidationInstance = createValidatorInstance(formsValidationConfig, event.target);
-    formValidationInstance.toggleSubmit();
+    addPlaceValidation.toggleSubmit();
 }
 
 popupAddPlace.addEventListener('submit', elementPopupSubmit)
@@ -144,11 +151,3 @@ initialCards.forEach(item => {
     const newElement = createCardInstance(item, elementSelector);
     renderElement(elementsContainer, newElement.generateElement());
 })
-
-// Enable forms validation
-
-const profileFormValidation = createValidatorInstance(formsValidationConfig, popupEditProfileForm);
-profileFormValidation.enableValidation();
-
-const addPlaceValidation = createValidatorInstance(formsValidationConfig, popupAddPlaceForm);
-addPlaceValidation.enableValidation();
