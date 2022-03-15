@@ -23,6 +23,7 @@ This is a repository which contains my fourth practical project work at [Yandex 
 ## Technologies used
 
 In order to make the layout "rubber" I used `@media` queries and put down a set of break points for different screen widths: 1280px, 1024px, 768px, 320px. The site has a popup which opens and closes on click. The form fields are filled with the values that are on the page. I used JS that edit form fields and change values on a website page. All images on the site are loaded through a ready-made array. Also, a user can add images to the site, delete them using the "trash bin" button. Implemented dynamic like buttons. I use visibility property, which ensures smooth opening and closing of the popup.
+The code has been reorganized by OOP and now consists of functional programming and object programming. The Card and FormValidator classes are created, the js files are imported into each other and connected as a module.
 ## Github pages
 
 You can check out how this web site looks like following this [link](https://vybegalo.github.io/mesto/)
