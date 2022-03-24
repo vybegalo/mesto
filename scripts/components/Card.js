@@ -1,15 +1,10 @@
-import { openPopup } from '../../pages/index.js';
-
-class Card {
-    constructor(item, elementSelector) {
+export default class Card {
+    constructor(item, elementSelector, handleCardClick) {
         this._name = item.name;
         this._link = item.link;
         this._alt = item.alt;
         this._elementSelector = elementSelector;
-
-        this._popupImage = document.querySelector('.popup_image');
-        this._imageLarge = this._popupImage.querySelector('.popup__image-large');
-        this._imageTitle = this._popupImage.querySelector('.popup__image-title');
+        this._handleCardClick = handleCardClick;
     };
 
     // get element template
@@ -39,13 +34,6 @@ class Card {
         return this._element;
     }
 
-    _elementImageEnlarge() {
-        openPopup(this._popupImage);
-        this._imageLarge.src = this._link;
-        this._imageLarge.alt = this._alt;
-        this._imageTitle.textContent = this._name;
-    }
-
     _addEventListeners() {
 
         // like function listener
@@ -60,12 +48,8 @@ class Card {
         });
 
         // enlarge function listener
-        this._elementImage.addEventListener('click', () => {
-            this._elementImageEnlarge();
-        });
+        this._elementImage.addEventListener('click', this._handleCardClick);
 
     }
 
 }
-
-export { Card };

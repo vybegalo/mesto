@@ -1,5 +1,9 @@
-import { Card } from "../scripts/components/Card.js";
-import { FormValidator } from "../scripts/components/FormValidator.js";
+import Card from "../scripts/components/Card.js";
+import FormValidator from "../scripts/components/FormValidator.js";
+import PopupWithImage from "../scripts/components/PopupWithImage.js";
+import PopupWithForm from "../scripts/components/PopupWithForm.js";
+import Section from "../scripts/components/Section.js";
+import UserInfo from "../scripts/components/UserInfo.js";
 import { initialCards } from "../scripts/utils/icards.js";
 
 const popupActiveClass = 'popup_active';
@@ -31,10 +35,24 @@ const formsValidationConfig = {
 const popupEditProfileForm = popupEditProfile.querySelector('.popup__form');
 const popupAddPlaceForm = popupAddPlace.querySelector('.popup__form');
 
+// Enlarge image section
+
+const popupImageEnlarge = new PopupWithImage(popupImage);
+
+const elementImageEnlarge = (evt) => {
+    const elementData = {
+        name: evt.target.parentNode.querySelector('.element__name-place').textContent,
+        link: evt.target.src,
+        alt: evt.target.alt
+    };
+    popupImageEnlarge.open(elementData);
+}
+
+
 // Card class instance
 
 const createCardInstance = (item, elementSelector) => {
-    const newElement = new Card(item, elementSelector);
+    const newElement = new Card(item, elementSelector, elementImageEnlarge);
     return newElement;
 };
 

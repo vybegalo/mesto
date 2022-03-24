@@ -3,7 +3,6 @@ export default class Section {
         this._renderItems = items;
         this._renderer = renderer;
         this._container = containerSelector;
-
     }
 
     addItem(element, toBeggining = false) {
