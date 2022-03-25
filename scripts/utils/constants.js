@@ -1,4 +1,4 @@
-export const popupActiveSelector = '.popup_active';
+export const popupActiveClass = 'popup_active';
 export const buttonEditProfile = document.querySelector('.profile__edit-button');
 export const buttonClose = document.querySelector('.popup__close');
 export const popupEditProfile = document.querySelector('.popup_edit-profile');
