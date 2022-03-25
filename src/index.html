@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Место</title>
-    <link rel="stylesheet" href="pages/index.css">
 </head>
 
 <body class="page">
@@ -28,7 +27,7 @@
         <section class="elements">
             <template id="elementTemplate">
                 <div class="element">
-                    <img class="element__image" src="_" alt="_"
+                    <img class="element__image" src="#" alt="_"
                         onerror="this.src='./images/elements/unavailable-image.png'">
                     <button class="element__trash-bin" type="button" aria-label="Удалить фото"></button>
                     <div class="element__info">
@@ -90,14 +89,13 @@
 
     <div class="popup popup_image">
         <div class="popup__image-content">
-            <img class="popup__image-large" src="_" alt="_"
+            <img class="popup__image-large" src="#" alt="_"
                 onerror="this.src='./images/elements/unavailable-image.png'">
             <p class="popup__image-title"></p>
             <button class="popup__close popup__close-image" type="button" aria-label="Закрыть"></button>
         </div>
     </div>
 
-    <script type="module" src="./pages/index.js"></script>
 </body>
 
 </html>

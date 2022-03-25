@@ -1,3 +1,5 @@
+import "./index.css";
+import "../index.html";
 import Card from "../scripts/components/Card.js";
 import FormValidator from "../scripts/components/FormValidator.js";
 import PopupWithImage from "../scripts/components/PopupWithImage.js";
@@ -12,6 +14,7 @@ import {
     popupImage, elementsContainer, elementSelector,
     popupEditProfileForm, popupAddPlaceForm, formsValidationConfig
 } from "../scripts/utils/constants.js";
+
 
 
 // Validation section
