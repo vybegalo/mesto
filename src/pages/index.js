@@ -105,9 +105,9 @@ const placesListSection = new Section(
 const newPlacePopup = new PopupWithForm(popupAddPlace, {
     submitFormCallback: (data) => {
         const elementData = {
-            name: data.placeNameInput,
-            link: data.placeLinkInput,
-            alt: data.placeNameInput
+            name: data.name,
+            link: data.link,
+            alt: data.name
         }
         renderElement(elementData, true);
         newPlacePopup.close();
