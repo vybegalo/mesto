@@ -4,6 +4,7 @@ const ivanovo = new URL('../../images/places/ivanovo.jpg', import.meta.url);
 const kamchatka = new URL('../../images/places/kamchatka.jpg', import.meta.url);
 const kholmogorsky = new URL('../../images/places/kholmogorsky-rayon.jpg', import.meta.url);
 const baikal = new URL('../../images/places/baikal.jpg', import.meta.url);
+export const unavailable = new URL('../../images/elements/unavailable-image.png', import.meta.url);
 
 
 export const initialCards = [

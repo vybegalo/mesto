@@ -1,3 +1,5 @@
+import { unavailable } from "../utils/icards.js";
+
 export default class Card {
     constructor(item, elementSelector, handleCardClick) {
         this._name = item.name;
@@ -29,6 +31,9 @@ export default class Card {
         this._elementName.textContent = this._name;
         this._elementImage.src = this._link;
         this._elementImage.alt = this._alt;
+        this._elementImage.onerror = function () {
+            this.src = unavailable;
+        }
 
         this._addEventListeners();
         return this._element;
