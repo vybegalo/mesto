@@ -1,12 +1,12 @@
 import { unavailable } from "../utils/icards.js";
 
 export default class Card {
-    constructor(item, elementSelector, handleCardClick) {
+    constructor(item, elementSelector, handleImageClick) {
         this._name = item.name;
         this._link = item.link;
         this._alt = item.alt;
         this._elementSelector = elementSelector;
-        this._handleCardClick = handleCardClick;
+        this._handleImageClick = handleImageClick;
     };
 
     // get element template
@@ -53,7 +53,7 @@ export default class Card {
         });
 
         // enlarge function listener
-        this._elementImage.addEventListener('click', this._handleCardClick);
+        this._elementImage.addEventListener('click', this._handleImageClick);
 
     }
 

@@ -55,7 +55,7 @@ buttonEditProfile.addEventListener('click', () => {
     const userData = userInfoInstance.getUserInfo()
     nameInput.value = userData.userName;
     jobInput.value = userData.userInfo;
-    profileFormValidation.toggleSubmit();
+    profileFormValidation.resetValidation();
 });
 
 buttonClose.addEventListener('click', () => {
@@ -67,13 +67,8 @@ buttonClose.addEventListener('click', () => {
 
 const popupImageEnlarge = new PopupWithImage(popupImage);
 
-const placeImageEnlarge = (evt) => {
-    const elementData = {
-        name: evt.target.parentNode.querySelector('.element__name-place').textContent,
-        link: evt.target.src,
-        alt: evt.target.alt
-    };
-    popupImageEnlarge.open(elementData);
+const handleImageClick = (element) => {
+    popupImageEnlarge.open(element);
 }
 
 popupImageEnlarge.setEventListeners();
@@ -82,7 +77,7 @@ popupImageEnlarge.setEventListeners();
 // Place (cards) section
 
 const createCardInstance = (element) => {
-    const newElement = new Card(element, elementSelector, placeImageEnlarge);
+    const newElement = new Card(element, elementSelector, () => handleImageClick(element));
     return newElement.generateElement();
 };
 
@@ -111,7 +106,6 @@ const newPlacePopup = new PopupWithForm(popupAddPlace, {
         }
         renderElement(elementData, true);
         newPlacePopup.close();
-        addPlaceValidation.toggleSubmit();
 
     }
 });
@@ -126,4 +120,5 @@ placesListSection.renderElements();
 
 placeAddButton.addEventListener('click', () => {
     newPlacePopup.open();
+    addPlaceValidation.resetValidation();
 });

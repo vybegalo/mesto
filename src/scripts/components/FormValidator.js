@@ -31,11 +31,20 @@ export default class FormValidator {
         }
     };
 
-    // activate and deactivate submit button public method
-    toggleSubmit() {
+    // activate and deactivate submit button
+    _toggleSubmitButton() {
         this._buttonElement.disabled = !this._form.checkValidity();
         this._buttonElement.classList.toggle(this._config.submitButtonDisabled, !this._form.checkValidity())
     };
+
+    // reset validation public method
+    resetValidation() {
+        this._toggleSubmitButton();
+        this._inputList.forEach((input) => {
+            this._hideError(input)
+        });
+    }
+
 
     // disable default submit action
     _handleSubmit(event) {
@@ -45,10 +54,10 @@ export default class FormValidator {
     // input listeners
     _addFormListeners() {
         this._form.addEventListener('submit', this._handleSubmit);
-        this._form.addEventListener('input', () => this.toggleSubmit());
-        const inputs = [...this._form.querySelectorAll(this._config.inputSelector)];
-        inputs.forEach(input => input.addEventListener('input', () => this._validateInput(input)));
-        this.toggleSubmit();
+        this._form.addEventListener('input', () => this._toggleSubmitButton());
+        this._inputList = [...this._form.querySelectorAll(this._config.inputSelector)];
+        this._inputList.forEach(input => input.addEventListener('input', () => this._validateInput(input)));
+        this._toggleSubmitButton();
     };
 
     // validation public function
