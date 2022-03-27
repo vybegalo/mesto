@@ -15,8 +15,7 @@ export default class PopupWithImage extends Popup {
         this._imageLarge.alt = elementData.alt;
         this._imageLarge.onerror = function () {
             this.src = unavailable;
-        }
-            ;
+        };
         this._imageTitle.textContent = elementData.name;
     }
 }
