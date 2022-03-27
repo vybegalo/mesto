@@ -1,5 +1,7 @@
+/* removed for unpacked version branch
 import "./index.css";
 import "../index.html";
+*/
 import Card from "../scripts/components/Card.js";
 import FormValidator from "../scripts/components/FormValidator.js";
 import PopupWithImage from "../scripts/components/PopupWithImage.js";
