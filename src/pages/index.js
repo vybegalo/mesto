@@ -58,11 +58,6 @@ buttonEditProfile.addEventListener('click', () => {
     profileFormValidation.resetValidation();
 });
 
-buttonClose.addEventListener('click', () => {
-    editProfileInstance.close();
-});
-
-
 // Enlarge image section
 
 const popupImageEnlarge = new PopupWithImage(popupImage);
