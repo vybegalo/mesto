@@ -1,4 +1,5 @@
 import Popup from './Popup.js'
+import { unavailable } from "../utils/icards.js";
 
 export default class PopupWithImage extends Popup {
     constructor(popup) {
@@ -12,6 +13,10 @@ export default class PopupWithImage extends Popup {
         super.open();
         this._imageLarge.src = elementData.link;
         this._imageLarge.alt = elementData.alt;
+        this._imageLarge.onerror = function () {
+            this.src = unavailable;
+        }
+            ;
         this._imageTitle.textContent = elementData.name;
     }
 }
