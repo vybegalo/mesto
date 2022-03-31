@@ -1,0 +1,11 @@
+
+.profile__image {
+    border-radius: inherit;
+    height: 100%;
+    transition: opacity .7s ease-in-out;
+}
+
+.profile__image:hover {
+    cursor: pointer;
+    opacity: .5;
+}

@@ -1,0 +1,6 @@
+.element__like-elements {
+    display: flex;
+    flex-flow: column nowrap;
+    margin-right: 5px;
+    width: 22px;
+}
