@@ -44,16 +44,16 @@ export default class Api {
             .then((res) => this._handleResponse(res));
     }
 
-    addLike(cardId) {
-        return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+    addLike(cardID) {
+        return fetch(`${this._baseUrl}/cards/${cardID}/likes`, {
             method: 'PUT',
             headers: this._headers,
         })
             .then((res) => this._handleResponse(res));
     }
 
-    removeLike(cardId) {
-        return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+    removeLike(cardID) {
+        return fetch(`${this._baseUrl}/cards/${cardID}/likes`, {
             method: 'DELETE',
             headers: this._headers,
         })
@@ -69,8 +69,8 @@ export default class Api {
             .then((res) => this._handleResponse(res));
     }
 
-    deletePlace(cardId) {
-        return fetch(`${this._baseUrl}/cards/${cardId}`, {
+    deletePlace(cardID) {
+        return fetch(`${this._baseUrl}/cards/${cardID}`, {
             method: 'DELETE',
             headers: this._headers,
         })
