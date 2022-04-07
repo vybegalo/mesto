@@ -1,6 +1,6 @@
 import Popup from './Popup.js'
 
-export default class PopupWithConfirm extends Popup {
+export default class PopupWithConfirmation extends Popup {
     constructor(popup, { submitCallback }) {
         super(popup);
         this._submitButton = this._popup.querySelector('.popup__delete-button');

@@ -5,7 +5,7 @@ import Card from "../scripts/components/Card.js";
 import FormValidator from "../scripts/components/FormValidator.js";
 import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import PopupWithForm from "../scripts/components/PopupWithForm.js";
-import PopupWithConfirm from "../scripts/components/PopupWithConfirm.js";
+import PopupWithConfirmation from "../scripts/components/PopupWithConfirmation.js";
 import Section from "../scripts/components/Section.js";
 import UserInfo from "../scripts/components/UserInfo.js";
 import { initialCards } from "../scripts/utils/icards.js";
@@ -160,7 +160,7 @@ const handleLikeClick = (element) => {
 }
 
 /* delete confirmation popup */
-const popupConfirmDeleteInstance = new PopupWithConfirm(popupConfirmDelete, {
+const popupConfirmDeleteInstance = new PopupWithConfirmation(popupConfirmDelete, {
     submitCallback: (element) => {
         handleDeleteClick(element);
     }
