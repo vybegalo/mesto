@@ -7,15 +7,16 @@ import Card from "../scripts/components/Card.js";
 import FormValidator from "../scripts/components/FormValidator.js";
 import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import PopupWithForm from "../scripts/components/PopupWithForm.js";
+import PopupWithConfirm from "../scripts/components/PopupWithConfirm.js";
 import Section from "../scripts/components/Section.js";
 import UserInfo from "../scripts/components/UserInfo.js";
 import { initialCards } from "../scripts/utils/icards.js";
 import {
     buttonEditProfile, buttonClose, popupEditProfile,
     buttonSubmitProfile, userName, userInfo, userAvatar, nameInput,
-    jobInput, popupChangeAvatar, popupChangeAvatarForm,
-    buttonSubmitAvatar, placeAddButton, popupAddPlace,
-    popupImage, elementsContainer, elementSelector,
+    jobInput, popupChangeAvatar, popupChangeAvatarForm, popupConfirmDelete,
+    buttonSubmitAvatar, placeAddButton, popupAddPlace, buttonConfirmDelete,
+    buttonSubmitPlace, popupImage, elementsContainer, elementSelector,
     popupEditProfileForm, popupAddPlaceForm, formsValidationConfig
 } from "../scripts/utils/constants.js";
 
@@ -96,7 +97,6 @@ buttonClose.addEventListener('click', () => {
 const popupChangeAvatarInstance = new PopupWithForm(popupChangeAvatar, {
     submitFormCallback: (data) => {
         saveUserAvatar(data);
-        popupChangeAvatarInstance.close();
     }
 });
 
@@ -138,9 +138,64 @@ popupImageEnlarge.setEventListeners();
 
 // Place (cards) section
 
+
+/* set/unset likes handler */
+const handleLikeClick = (element) => {
+    const id = element.getPlaceID();
+    const currentUser = userInfoInstance.getUserID();
+    const likeState = element.isLiked();
+    const likeFunc = likeState
+        ? (placeID) => api.removeLike(placeID)
+        : (placeID) => api.addLike(placeID);
+
+    likeFunc(id)
+        .then((res) => {
+            element.setLikes(res.likes);
+        })
+        .catch((err) => {
+            console.log(`Cannot update likes: ${err}`);
+            element.setLikes(!likeState ? [{ _id: currentUser }] : []);
+        })
+        .finally(() => {
+            element.updateLikes(currentUser);
+        });
+}
+
+/* delete confirmation popup */
+const popupConfirmDeleteInstance = new PopupWithConfirm(popupConfirmDelete, {
+    submitCallback: (element) => {
+        handleDeleteClick(element);
+    }
+});
+
+/* place delete handler */
+const handleDeleteClick = (element) => {
+    buttonConfirmDelete.textContent = 'Удаление...';
+    api.deletePlace(element.getPlaceID())
+        .then(() => {
+            element.delete();
+        })
+        .catch((err) => {
+            console.log(`Cannot remove place: ${err}`);
+        })
+        .finally(() => {
+            popupConfirmDeleteInstance.close();
+            buttonConfirmDelete.textContent = 'Да';
+        });
+}
+
+popupConfirmDeleteInstance.setEventListeners();
+
+/* place card instance */
 const createCardInstance = (element) => {
-    const newElement = new Card(element, elementSelector, () => handleImageClick(element));
-    return newElement.generateElement();
+    const newElement = new Card(
+        element,
+        elementSelector,
+        () => handleImageClick(element),
+        (clickedElement) => handleLikeClick(clickedElement),
+        (clickedElement) => popupConfirmDeleteInstance.open(clickedElement)
+    );
+    return newElement.generateElement(userInfoInstance.getUserID());
 };
 
 /* place renderer */
@@ -152,16 +207,31 @@ const renderElement = (item, toBeggining) => {
 /* create place */
 const newPlacePopup = new PopupWithForm(popupAddPlace, {
     submitFormCallback: (data) => {
-        const elementData = {
-            name: data.name,
-            link: data.link,
-            alt: data.name
-        }
-        renderElement(elementData, true);
-        newPlacePopup.close();
-
+        saveNewPlace(data);
     }
 });
+
+function saveNewPlace(data) {
+    buttonSubmitPlace.textContent = 'Сохранение...';
+    api.addNewPlace({ name: data.name, link: data.link })
+        .then((res) => {
+            renderElement({
+                name: res.name,
+                link: res.link,
+                alt: res.name,
+                likes: res.likes,
+                owner: res.owner._id,
+                id: res._id,
+            }, true);
+        })
+        .catch((err) => {
+            console.log(`Cannot save new place on server: ${err}`);
+        })
+        .finally(() => {
+            newPlacePopup.close();
+            buttonSubmitPlace.textContent = 'Создать';
+        });
+}
 
 newPlacePopup.setEventListeners();
 
@@ -190,8 +260,8 @@ api.getUserInfo()
             .then((res) => {
                 placesList = res.map((item) => ({
                     name: item.name,
-                    alt: item.name,
                     link: item.link,
+                    alt: item.name,
                     likes: item.likes,
                     owner: item.owner._id,
                     id: item._id,
