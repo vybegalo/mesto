@@ -8,11 +8,10 @@ import PopupWithForm from "../scripts/components/PopupWithForm.js";
 import PopupWithConfirmation from "../scripts/components/PopupWithConfirmation.js";
 import Section from "../scripts/components/Section.js";
 import UserInfo from "../scripts/components/UserInfo.js";
-import { initialCards } from "../scripts/utils/icards.js";
 import {
-    buttonEditProfile, buttonClose, popupEditProfile,
-    buttonSubmitProfile, userName, userInfo, userAvatar, nameInput,
-    jobInput, popupChangeAvatar, popupChangeAvatarForm, popupConfirmDelete,
+    buttonEditProfile, popupEditProfile, buttonSubmitProfile,
+    userName, userInfo, userAvatar, nameInput, jobInput,
+    popupChangeAvatar, popupChangeAvatarForm, popupConfirmDelete,
     buttonSubmitAvatar, placeAddButton, popupAddPlace, buttonConfirmDelete,
     buttonSubmitPlace, popupImage, elementsContainer, elementSelector,
     popupEditProfileForm, popupAddPlaceForm, formsValidationConfig
@@ -20,6 +19,7 @@ import {
 
 let placesList = [];
 let placesListSection = null;
+const formValidators = {}
 
 const api = new Api({
     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-38',
@@ -31,18 +31,18 @@ const api = new Api({
 
 // Validation section
 
-const createValidatorInstance = (config, form) => {
-    const formValidationInstance = new FormValidator(config, form);
-    return formValidationInstance;
+const enableValidation = (config) => {
+    const formList = [...document.querySelectorAll(config.formSelector)]
+    formList.forEach((formElement) => {
+        const validator = new FormValidator(config, formElement)
+        const formName = formElement.getAttribute('name')
+        formValidators[formName] = validator;
+        validator.enableValidation();
+    });
 };
 
 /* enable forms validation */
-const profileFormValidation = createValidatorInstance(formsValidationConfig, popupEditProfileForm);
-profileFormValidation.enableValidation();
-const addPlaceValidation = createValidatorInstance(formsValidationConfig, popupAddPlaceForm);
-addPlaceValidation.enableValidation();
-const updateUserAvatarValidation = createValidatorInstance(formsValidationConfig, popupChangeAvatarForm);
-updateUserAvatarValidation.enableValidation();
+enableValidation(formsValidationConfig);
 
 
 // Profile manage section
@@ -60,12 +60,12 @@ const saveUserProfile = (data) => {
         .then((res) => {
             userInfoInstance.setUserInfo({ userName: res.name, userInfo: res.about });
             userInfoInstance.setUserID(res._id);
+            editProfileInstance.close();
         })
         .catch((err) => {
             console.log(`Cannot update user profile: ${err}`);
         })
         .finally(() => {
-            editProfileInstance.close();
             buttonSubmitProfile.textContent = 'Сохранить';
         });
 }
@@ -84,18 +84,12 @@ buttonEditProfile.addEventListener('click', () => {
     const userData = userInfoInstance.getUserInfo()
     nameInput.value = userData.userName;
     jobInput.value = userData.userInfo;
-    profileFormValidation.resetValidation();
-});
-
-buttonClose.addEventListener('click', () => {
-    editProfileInstance.close();
+    formValidators[popupEditProfileForm.getAttribute('name')].resetValidation();
 });
 
 /* update avatar popup */
 const popupChangeAvatarInstance = new PopupWithForm(popupChangeAvatar, {
-    submitFormCallback: (data) => {
-        saveUserAvatar(data);
-    }
+    submitFormCallback: saveUserAvatar
 });
 
 /* save user avatar */
@@ -105,19 +99,19 @@ const saveUserAvatar = (data) => {
         .then((res) => {
             userInfoInstance.setUserAvatar(res.avatar);
             userInfoInstance.setUserID(res._id);
+            popupChangeAvatarInstance.close();
         })
         .catch((err) => {
             console.log(`Cannot update user avatar: ${err}`);
         })
         .finally(() => {
-            popupChangeAvatarInstance.close();
             buttonSubmitAvatar.textContent = 'Сохранить';
         });
 }
 
 userAvatar.addEventListener('click', () => {
-    popupChangeAvatarInstance.open(userInfoInstance.getUserAvatar());
-    updateUserAvatarValidation.resetValidation();
+    popupChangeAvatarInstance.open();
+    formValidators[popupChangeAvatarForm.getAttribute('name')].resetValidation();
 });
 
 popupChangeAvatarInstance.setEventListeners();
@@ -149,13 +143,10 @@ const handleLikeClick = (element) => {
     likeFunc(id)
         .then((res) => {
             element.setLikes(res.likes);
+            element.updateLikes(currentUser);
         })
         .catch((err) => {
             console.log(`Cannot update likes: ${err}`);
-            element.setLikes(!likeState ? [{ _id: currentUser }] : []);
-        })
-        .finally(() => {
-            element.updateLikes(currentUser);
         });
 }
 
@@ -172,12 +163,12 @@ const handleDeleteClick = (element) => {
     api.deletePlace(element.getPlaceID())
         .then(() => {
             element.delete();
+            popupConfirmDeleteInstance.close();
         })
         .catch((err) => {
             console.log(`Cannot remove place: ${err}`);
         })
         .finally(() => {
-            popupConfirmDeleteInstance.close();
             buttonConfirmDelete.textContent = 'Да';
         });
 }
@@ -221,12 +212,12 @@ function saveNewPlace(data) {
                 owner: res.owner._id,
                 id: res._id,
             }, true);
+            newPlacePopup.close();
         })
         .catch((err) => {
             console.log(`Cannot save new place on server: ${err}`);
         })
         .finally(() => {
-            newPlacePopup.close();
             buttonSubmitPlace.textContent = 'Создать';
         });
 }
@@ -236,45 +227,34 @@ newPlacePopup.setEventListeners();
 /* add place popup */
 placeAddButton.addEventListener('click', () => {
     newPlacePopup.open();
-    addPlaceValidation.resetValidation();
+    formValidators[popupAddPlaceForm.getAttribute('name')].resetValidation();
 });
 
 
 // Fetch data from server section
 
-api.getUserInfo()
-    /* get user data */
-    .then((res) => {
-        userInfoInstance.setUserInfo({ userName: res.name, userInfo: res.about });
-        userInfoInstance.setUserAvatar(res.avatar);
-        userInfoInstance.setUserID(res._id);
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+    .then(([userData, cards]) => {
+        /* get user data */
+        userInfoInstance.setUserInfo({ userName: userData.name, userInfo: userData.about });
+        userInfoInstance.setUserAvatar(userData.avatar);
+        userInfoInstance.setUserID(userData._id);
+        /* get places cards */
+        placesList = cards.map((item) => ({
+            name: item.name,
+            link: item.link,
+            alt: item.name,
+            likes: item.likes,
+            owner: item.owner._id,
+            id: item._id,
+        }));
+        /* render cards */
+        placesListSection = new Section(
+            { items: placesList, renderer: renderElement },
+            elementsContainer
+        );
+        placesListSection.renderElements();
     })
     .catch((err) => {
-        console.log(`Cannot get user information: ${err}`);
+        console.log(`Failed to fetch information from server: ${err}`);
     })
-    .finally(() => {
-        /* get places cards */
-        api.getInitialCards()
-            .then((res) => {
-                placesList = res.map((item) => ({
-                    name: item.name,
-                    link: item.link,
-                    alt: item.name,
-                    likes: item.likes,
-                    owner: item.owner._id,
-                    id: item._id,
-                }));
-            })
-            .catch((err) => {
-                console.log(`Cannot load cards from server: ${err}`);
-                placesList = initialCards;
-            })
-            .finally(() => {
-                /* render cards */
-                placesListSection = new Section(
-                    { items: placesList, renderer: renderElement },
-                    elementsContainer
-                );
-                placesListSection.renderElements();
-            });
-    });

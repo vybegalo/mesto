@@ -1,4 +1,4 @@
-import { unavailable } from "../utils/icards.js";
+import { unavailable } from "../utils/constants.js";
 
 export default class Card {
     constructor(item, elementSelector, handleImageClick, handleLikeClick, handleDeleteClick) {

@@ -1,5 +1,5 @@
 import Popup from './Popup.js'
-import { unavailable } from "../utils/icards.js";
+import { unavailable } from "../utils/constants.js";
 
 export default class PopupWithImage extends Popup {
     constructor(popup) {

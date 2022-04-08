@@ -1,6 +1,6 @@
 export const popupActiveClass = 'popup_active';
+export const unavailable = new URL('../../images/elements/unavailable-image.png', import.meta.url);
 export const buttonEditProfile = document.querySelector('.profile__edit-button');
-export const buttonClose = document.querySelector('.popup__close');
 export const popupEditProfile = document.querySelector('.popup_edit-profile');
 export const buttonSubmitProfile = popupEditProfile.querySelector('.popup__save');
 export const userName = document.querySelector('.profile__user-name');
