@@ -89,7 +89,9 @@ buttonEditProfile.addEventListener('click', () => {
 
 /* update avatar popup */
 const popupChangeAvatarInstance = new PopupWithForm(popupChangeAvatar, {
-    submitFormCallback: saveUserAvatar
+    submitFormCallback: (data) => {
+        saveUserAvatar(data);
+    }
 });
 
 /* save user avatar */
